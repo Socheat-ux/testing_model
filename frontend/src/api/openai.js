@@ -10,7 +10,15 @@ export async function callOpenAI({ key, model, prompt }) {
   const data = await res.json()
   const t1 = performance.now()
 
-  if (!res.ok) throw new Error(data.error || 'Request failed')
+  if (!res.ok) {
+    const msg = data.error || 'Request failed'
+    if (typeof msg === 'string' && /quota|billing/i.test(msg)) {
+      throw new Error(
+        'This OpenAI key has no remaining quota. Add credits at platform.openai.com (Billing) or use a key from a project with billing enabled.'
+      )
+    }
+    throw new Error(msg)
+  }
 
   const text = data.choices?.[0]?.message?.content ?? '(empty response)'
   const tokens = data.usage

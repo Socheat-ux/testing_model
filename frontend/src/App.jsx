@@ -13,9 +13,11 @@ export default function App() {
   const [openaiKey, setOpenaiKey] = useState('')
   const [openaiModel, setOpenaiModel] = useState('gpt-4o-mini')
   const [geminiKey, setGeminiKey] = useState('')
-  const [geminiModel, setGeminiModel] = useState('gemini-2.0-flash')
+  const [geminiModel, setGeminiModel] = useState('gemini-3.6-flash')
   const [hfKey, setHfKey] = useState('')
-  const [hfModel, setHfModel] = useState('')
+  const [hfModel, setHfModel] = useState(
+    'meta-llama/Llama-3.1-8B-Instruct'
+  )
 
   const [results, setResults] = useState({
     openai: initialResult,
@@ -28,9 +30,9 @@ export default function App() {
     setResults((prev) => ({ ...prev, [id]: { ...prev[id], ...patch } }))
   }
 
-  async function runOne(id, hasKey, fn, args) {
+  async function runOne(id, hasKey, fn, args, missingMsg = 'No API key entered.') {
     if (!hasKey) {
-      updateResult(id, { status: 'error', text: 'No API key entered.' })
+      updateResult(id, { status: 'error', text: missingMsg })
       return
     }
     updateResult(id, { status: 'loading', text: 'Running...' })
@@ -60,7 +62,7 @@ export default function App() {
         key: hfKey.trim(),
         model: hfModel.trim(),
         prompt,
-      }),
+      }, 'No Hugging Face API key or model entered.'),
     ])
     setRunning(false)
   }
@@ -114,8 +116,9 @@ export default function App() {
             onChange={(e) => setGeminiModel(e.target.value)}
           >
             <option value="gemini-2.0-flash">gemini-2.0-flash</option>
-            <option value="gemini-1.5-pro">gemini-1.5-pro</option>
-            <option value="gemini-1.5-flash">gemini-1.5-flash</option>
+            <option value="gemini-3.6-flash">gemini-3.6-flash</option>
+            <option value="gemini-3.1-pro-preview">gemini-3.1-pro-preview</option>
+            <option value="gemini-3.5-flash-lite">gemini-3.5-flash-lite</option>
           </select>
           <div className="modelname">Called directly from the browser.</div>
         </div>
