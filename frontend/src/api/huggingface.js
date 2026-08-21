@@ -1,17 +1,12 @@
-// Calls the Hugging Face Inference API directly from the browser.
+// Calls Hugging Face via the local backend proxy (see ../../../backend)
+// to avoid the browser CORS restriction on api-inference.huggingface.co.
 export async function callHF({ key, model, prompt }) {
   const t0 = performance.now()
-  const res = await fetch(
-    `https://api-inference.huggingface.co/models/${model}`,
-    {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${key}`,
-      },
-      body: JSON.stringify({ inputs: prompt }),
-    }
-  )
+  const res = await fetch('/api/huggingface', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ key, model, prompt }),
+  })
   const data = await res.json()
   const t1 = performance.now()
 
