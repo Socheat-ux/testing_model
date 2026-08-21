@@ -1,0 +1,246 @@
+:root {
+  --bg: #fafafa;
+  --surface: #ffffff;
+  --border: #e5e7eb;
+  --text: #18181b;
+  --muted: #71717a;
+  --accent: #2563eb;
+  --err: #dc2626;
+  --radius: 12px;
+  --mono: 'SF Mono', 'Consolas', monospace;
+  --sans: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+.page {
+  padding: 40px 32px;
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+h1 {
+  font-size: 30px;
+  font-weight: 650;
+  margin: 0 0 10px 0;
+  letter-spacing: -0.02em;
+}
+
+.sub {
+  color: var(--muted);
+  font-size: 16px;
+  margin-bottom: 40px;
+}
+
+/* --- Setup cards --- */
+.setup {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.keybox {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  transition: border-color 0.15s ease;
+}
+
+.keybox:focus-within {
+  border-color: var(--accent);
+}
+
+.keybox label {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 12px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.keybox input[type='text'],
+.keybox input[type='password'] {
+  width: 100%;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  padding: 11px 12px;
+  font-size: 15px;
+  font-family: var(--mono);
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+
+.keybox input[type='text']:focus,
+.keybox input[type='password']:focus {
+  border-color: var(--accent);
+}
+
+.keybox .modelname {
+  font-size: 13px;
+  color: var(--muted);
+  margin-top: 10px;
+  line-height: 1.5;
+}
+
+.keybox select {
+  width: 100%;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  padding: 10px 12px;
+  font-size: 15px;
+  margin-top: 10px;
+  outline: none;
+}
+
+/* --- Prompt row --- */
+.promptrow {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 28px;
+}
+
+textarea {
+  flex: 1;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text);
+  padding: 16px;
+  font-size: 16px;
+  font-family: var(--sans);
+  resize: vertical;
+  min-height: 64px;
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+
+textarea:focus {
+  border-color: var(--accent);
+}
+
+button {
+  background: var(--text);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius);
+  padding: 0 30px;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+
+button:disabled {
+  background: var(--border);
+  color: var(--muted);
+  cursor: not-allowed;
+}
+
+button:hover:not(:disabled) {
+  opacity: 0.85;
+}
+
+/* --- Results --- */
+.results {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  display: flex;
+  flex-direction: column;
+  min-height: 220px;
+  overflow: hidden;
+}
+
+.panel-head {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.panel-title {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.panel-body {
+  padding: 16px;
+  font-size: 15px;
+  line-height: 1.65;
+  white-space: pre-wrap;
+  overflow-y: auto;
+  flex: 1;
+  max-height: 340px;
+  color: var(--text);
+}
+
+.panel-foot {
+  border-top: 1px solid var(--border);
+  padding: 10px 16px;
+  display: flex;
+  gap: 18px;
+  font-size: 13px;
+  color: var(--muted);
+  font-family: var(--mono);
+  background: var(--bg);
+}
+
+.stat b {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.placeholder {
+  color: var(--muted);
+  font-style: italic;
+}
+
+.errtext {
+  color: var(--err);
+}
+
+.loading {
+  color: var(--accent);
+}
+
+@media (max-width: 800px) {
+  .setup,
+  .results {
+    grid-template-columns: 1fr;
+  }
+  .promptrow {
+    flex-direction: column;
+  }
+}
